@@ -18,35 +18,46 @@ def main():
 	#print(url)
 	page = requests.get(url)
 	#print(page.text[:1000])
-	soup = BeautifulSoup(page.text, 'html5lib') 
+	soup = BeautifulSoup(page.text, 'html5lib')
 	#print(soup)
 	#soup = soup.prettify()
 	page_urls = soup.find_all('h1',attrs={'itemprop':"headline"})
-	
+
 	links = []
-	for page_url in page_urls: 
+	for page_url in page_urls:
 		children = page_url.findChildren("a" , recursive=False)
 		#print(children)
 		links.append(children[0]['href'])
-	#print(links)
-	get_content(links[0])
+	print(links)
+	get_content(links[2])
 
 def get_content(link):
+	print(link)
 	page = requests.get(link)
 	#print(page.text[:1000])
-	soup = BeautifulSoup(page.text, 'html5lib') 
+	soup = BeautifulSoup(page.text, 'html5lib')
 
-	sentence_list = soup.find_all('p')
+	body_content = soup.find_all('div',attrs={'property':"articleBody"})
+
+	#print(body_content)
+
+	sentence_list = body_content[0].find_all('p')
+	print(sentence_list)
+	video_check = soup.find_all('video')
+	print(video_check)
+	if len(video_check)>0:
+		print("This is a video based article")
+		quit()
 
 	text = []
 	for sentence in sentence_list:
-		text.append(sentence.contents)
+		text.append(sentence.contents[0])
 
 	print(text)
 	text= ''.join(text)
 
 	print(text,'\n\n\n')
-	make_summary(text)
+	#make_summary(text)
 
 if __name__ == '__main__':
 	main()
