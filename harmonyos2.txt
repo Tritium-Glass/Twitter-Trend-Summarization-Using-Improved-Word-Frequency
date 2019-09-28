@@ -1,0 +1,13 @@
+We'd been hearing whispers that Huawei was creating its own operating system for phones, tablets and other smart devices, a precaution in case it lost access to Google's Android software. And the Chinese company confirmed this Friday at its Huawei Developer Conference, where it officially unveiled the new operating system: HarmonyOS, a cross-device platform previously known as HongMeng.
+
+Speaking at HDC, Richard Yu, CEO of Huawei's consumer business, said HarmonyOS is ready to run on phones if the company isn't able to use Android, but Huawei will hold off using it "for the consideration of partnership and ecosystem."
+
+The much-maligned Huawei may've been working on the new operating system since 2012. But reports about HarmonyOS heated up in the wake of the US government blacklisting Huawei in May. The company was added to the Commerce Department's "entity list," following an executive order from President Donald Trump that effectively banned it from US communications networks due to Huawei's alleged ties with the Chinese government. The ban means Huawei can't buy products or services from US companies, or use their tech.
+
+Yu said that, like Android, HarmonyOS will be open source, allowing developers to modify it for their hardware and opening the potential for a broader embrace of the platform. Yu also said migrating from Android to HarmonyOS would take a few days, and that the cross-device operating system will support a variety of app languages, including Android, Linux and HTML5.
+
+Previously, Huawei expressed some uncertainty about its ability to use Android in future devices as it waited for Commerce Department clearance in the wake of the Trump administration's restrictions.
+
+Huawei executive Catherine Chen acknowledged last month that HarmonyOS was being built, but said it wasn't for phones. She said it was originally designed for internet of things (IoT) devices like smart TVs, and that it contains far fewer lines of code than a phone OS.
+
+Huawei founder and CEO Ren Zhengfei reportedly echoed the IoT point but boasted that the homegrown OS is about 60% faster than Android -- suggesting that it had in fact been made for phones. Ren also said HarmonyOS devices will require their own app store, which we've heard some evidence about.
