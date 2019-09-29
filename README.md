@@ -1,6 +1,5 @@
 # Final-Year-Project
 
-Contains:
 <ul>
   <li>Tweet fetching bot</li>
   <li>Web scraping prototype</li>
