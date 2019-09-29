@@ -7,6 +7,7 @@
     <ol>
       <li>Word Frequency</li>
       <li>TF-IDF</li>
+      <li>Simple Neural Network</li>
     </ol>
   </li>
   </ul>
