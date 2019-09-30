@@ -21,7 +21,10 @@ Mumbai = 2295411
 trends = twitter_api.trends.place(_id=Mumbai)
 
 #print (mum_trends)
-#print (json.dumps(trends, indent=1))
+# print (json.dumps(trends, indent=1))
 for trend in trends[0]["trends"]:
-	t = trend["name"].strip("#")
-	print(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', t).lower())
+    try:
+    	t = trend["name"].strip("#")
+    	print(re.sub(r'(?<=[a-z])(?=[A-Z])', ' ', t).lower())
+    except Exception as e:
+        pass
