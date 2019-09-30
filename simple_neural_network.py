@@ -11,8 +11,6 @@ def sigmoid_derivative(x):
 train_input = np.array([[0,0,1],[1,1,1],[1,0,1],[0,1,1]])
 train_output = np.array([[0,1,1,0]]).T #transpose to make it 4x1
 
-np.random.seed(1) #for random weights
-
 #3(inputs)x1(output) matrix random values between -1 and 1 with mean 0
 synaptic_weights = 2*np.random.random((3,1)) - 1
 

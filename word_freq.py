@@ -31,15 +31,18 @@ for s in sen:
             sum += wgt[current]
     order[s] = sum
 sorted_sen = dict(sorted(order.items(), key = lambda x:x[1], reverse=True))
-##print(text)
-##print(sen)
-##print(small)
-##print(punc_free)
-##print(words)
-##print(wgt)
-##print(order)
-##print(sorted_sen)
+print('\n1.Text\n',text)
+print('\n2.List of Sentences\n',sen)
+print('\n3.List of sentences in small case\n',small)
+print('\n4.Removing punctuation\n',punc_free)
+print('\n5.Removing stop words\n',words)
+print('\n6.Word frequency\n',wgt)
+print('\n7.Sentences with sum of frequency of their words\n',order)
+print('\n8.Sorted sentences\n',sorted_sen)
+print('\n9.Final Summary:')
+final_summary = ""
 for i in range(4):
     summ = max(sorted_sen, key=lambda x:sorted_sen[x])
+    final_summary += summ
     print(summ)
     del sorted_sen[summ]

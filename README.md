@@ -1,6 +1,5 @@
 # Final-Year-Project
 
-Contains:
 <ul>
   <li>Tweet fetching bot</li>
   <li>Web scraping prototype</li>
@@ -8,6 +7,7 @@ Contains:
     <ol>
       <li>Word Frequency</li>
       <li>TF-IDF</li>
+      <li>Simple Neural Network</li>
     </ol>
   </li>
   </ul>
