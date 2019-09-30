@@ -86,15 +86,17 @@ def cnn_search(phrase):
 	article_links = []
 
 	for article in articles:
-		# print(article.text)
+		#print(article.text)
 		exact_article = article.find_element_by_xpath("div[@class='col-sm-7 topics-sec-item-cont']")
 		article_link = exact_article.find_element_by_xpath("a")
 		# print(exact_article.text)
-		# print(article_link.text)
+		print(article_link.get_attribute('href'))
 		if phrase in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
 
 	driver.close()
+
+	#print(article_links)
 
 	for article_link in article_links:
 		cnn_webpage_to_text(article_link)
@@ -103,6 +105,7 @@ def cnn_search(phrase):
 
 def cnn_webpage_to_text(link):
 
+	#print('a')
 	page = requests.get(link)
 	#print(page.text[:1000])
 	soup = BeautifulSoup(page.text, 'html5lib')
@@ -113,6 +116,7 @@ def cnn_webpage_to_text(link):
 
 	text = []
 	for sentence in sentence_list:
+		#print(sentence)
 		if isinstance(sentence.contents[0],bs4.element.NavigableString):
 			text.append(sentence.contents[0])
 
@@ -122,7 +126,8 @@ def cnn_webpage_to_text(link):
 	try:
 		print(text,'\n')
 	except Exception as e:
+		print('error')
 		pass
 
 if __name__ == '__main__':
-	cnn_search('kashmir')
+	cnn_search('huawei')
