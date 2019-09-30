@@ -31,7 +31,7 @@ def bbc_search(phrase):
 		#print(children)
 		links.append(children[0]['href'])
 	print(links)
-	get_content(links[2])
+	bbc_webpage_to_text(links[2])
 
 def bbc_webpage_to_text(link):
 	print(link)
@@ -130,4 +130,4 @@ def cnn_webpage_to_text(link):
 		pass
 
 if __name__ == '__main__':
-	cnn_search('huawei')
+	bbc_search('huawei')
