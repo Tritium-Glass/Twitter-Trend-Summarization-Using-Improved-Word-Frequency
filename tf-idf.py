@@ -8,11 +8,7 @@ nltk.download('punkt')
 with open('johannes.txt','r+',encoding="utf-8") as file:
     text = file.read()
 
-#separate sentences and consider each as separate document
-sentences = sent_tokenize(text) # NLTK function
-total_documents = len(sentences)
-
-#stem the words and then create frequency matrix of it
+#remove stop words, stem the words and then create frequency matrix of it
 def _create_frequency_matrix(sentences):
     frequency_matrix = {}
     stopWords = set(stopwords.words("english"))
@@ -131,8 +127,8 @@ def _find_average_score(sentenceValue) -> int:
 
     # Average value of a sentence from original summary_text
     average = (sumValues / len(sentenceValue))
-
     return average
+    
 #sentence selected if the sentence score is more than threshold
 def _generate_summary(sentences, sentenceValue, threshold):
     sentence_count = 0
@@ -146,7 +142,7 @@ def _generate_summary(sentences, sentenceValue, threshold):
 
     return summary
 
-# 1 Sentence Tokenize
+# 1 Separate sentences
 sentences = sent_tokenize(text) #NLTK function
 total_documents = len(sentences)
 print('1. Tokenised sentences:\n',sentences)
