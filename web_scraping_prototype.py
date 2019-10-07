@@ -66,13 +66,14 @@ def start_browser():
 	dir = os.path.dirname(__file__)
 	chrome_driver_path = dir + "/chromedriver.exe"
 	chrome_options = Options()
-	#"https://www.aljazeera.com/Search/?q="+searchchrome_options.add_argument("--headless")
+	# "https://www.aljazeera.com/Search/?q="+search
+	chrome_options.add_argument("--headless")
 	#chrome_options.binary_location = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
 	# create a new Chrome session
 
 	return webdriver.Chrome(options=chrome_options)
 
-def cnn_search(phrase):
+def aljazeera_search(phrase):
 
 	driver = start_browser()
 
@@ -86,11 +87,11 @@ def cnn_search(phrase):
 	article_links = []
 
 	for article in articles:
-		#print(article.text)
+		# print(article.text)
 		exact_article = article.find_element_by_xpath("div[@class='col-sm-7 topics-sec-item-cont']")
 		article_link = exact_article.find_element_by_xpath("a")
 		# print(exact_article.text)
-		print(article_link.get_attribute('href'))
+		# print(article_link.get_attribute('href'))
 		if phrase in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
 
@@ -99,10 +100,10 @@ def cnn_search(phrase):
 	#print(article_links)
 
 	for article_link in article_links:
-		cnn_webpage_to_text(article_link)
+		aljazeera_webpage_to_text(article_link)
 	# cnn_webpage_to_text(article_links[0])
 
-def cnn_webpage_to_text(link):
+def aljazeera_webpage_to_text(link):
 
 	#print('a')
 	page = requests.get(link)
@@ -198,4 +199,4 @@ def toi_webpage_to_text(link):
 
 
 if __name__ == '__main__':
-	toi_search('huawei')
+	aljazeera_search('huawei')
