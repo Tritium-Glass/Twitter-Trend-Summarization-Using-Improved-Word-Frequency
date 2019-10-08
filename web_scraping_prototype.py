@@ -91,7 +91,7 @@ def aljazeera_search(phrase):
 		article_link = exact_article.find_element_by_xpath("a")
 		# print(exact_article.text)
 		# print(article_link.get_attribute('href'))
-		if phrase in article_link.text.lower():
+		if phrase in article_link.text.lower() and "in pictures" not in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
 
 	article_links = article_links[:10]
@@ -201,7 +201,5 @@ def toi_webpage_to_text(link):
 	except Exception as e:
 		pass
 
-
-
-# if __name__ == '__main__':
-# 	aljazeera_search('huawei')
+if __name__ == '__main__':
+	print(aljazeera_search('lgbt'))
