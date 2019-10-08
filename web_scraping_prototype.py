@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 import os
 from time import sleep
-from text_sum import make_summary
 from bs4 import BeautifulSoup
 import bs4
 
@@ -95,13 +94,18 @@ def aljazeera_search(phrase):
 		if phrase in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
 
+	article_links = article_links[:5]
+
 	driver.close()
 
 	#print(article_links)
 
+	articles_list = []
 	for article_link in article_links:
-		aljazeera_webpage_to_text(article_link)
+		articles_list.append(aljazeera_webpage_to_text(article_link))
 	# cnn_webpage_to_text(article_links[0])
+
+	return articles_list
 
 def aljazeera_webpage_to_text(link):
 
@@ -124,7 +128,8 @@ def aljazeera_webpage_to_text(link):
 	text= ''.join(text)
 
 	try:
-		print(text,'\n')
+		# print(text,'\n')
+		return text
 	except Exception as e:
 		print('error')
 		pass
@@ -198,5 +203,5 @@ def toi_webpage_to_text(link):
 
 
 
-if __name__ == '__main__':
-	aljazeera_search('huawei')
+# if __name__ == '__main__':
+# 	aljazeera_search('huawei')
