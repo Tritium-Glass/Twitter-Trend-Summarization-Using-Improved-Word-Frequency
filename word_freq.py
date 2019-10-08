@@ -46,7 +46,7 @@ def word_freq_summarize(text):
     # print('\n8.Sorted sentences\n',sorted_sen)
     # print('\n9.Final Summary:')
     final_summary = ""
-    while True:
+    while True and len(sorted_sen)>0:
         summ = max(sorted_sen, key=lambda x:sorted_sen[x])
         if (len(final_summary)+len(summ))<280:
             final_summary += summ

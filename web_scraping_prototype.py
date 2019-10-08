@@ -94,7 +94,7 @@ def aljazeera_search(phrase):
 		if phrase in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
 
-	article_links = article_links[:5]
+	article_links = article_links[:10]
 
 	driver.close()
 

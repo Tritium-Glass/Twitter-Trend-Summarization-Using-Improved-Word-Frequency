@@ -8,9 +8,9 @@ nltk.download('punkt')
 
 # with open('microsoft.txt','r+',encoding="utf-8") as file:
 #     text = file.read()
-text = '''
-Microsoft held talks in the past few weeks to acquire software developer platform GitHub, Business Insider reports. One person familiar with the discussions between the companies told CNBC that they had been considering a joint marketing partnership valued around $35 million, and that those discussions had progressed to a possible investment or outright acquisition. It is unclear whether talks are still ongoing, but this person said that GitHub's price for a full acquisition was more than Microsoft currently wanted to pay. GitHub was last valued at $2 billion in its last funding round 2015, but the price tag for an acquisition could be $5 billion or more, based on a price that was floated last year. GitHub's tools have become essential to software developers, who use it to store code, keep track of updates and discuss issues. The privately held company has more than 23 million individual users in more than 1.5 million organizations. It was on track to book more than $200 million in subscription revenue, including more than $110 million from companies using its enterprise product, GitHub told CNBC last fall.Microsoft has reportedly flirted with buying GitHub in the past, including in 2016, although GitHub denied those reports. A partnership would give Microsoft another connection point to the developers it needs to court to build applications on its various platforms, including the Azure cloud. Microsoft could also use data from GitHub to improve its artificial intelligence producs. The talks come amid GitHub's struggle to replace CEO and founder Chris Wanstrath, who stepped down 10 months ago. Business Insider reported that Microsoft exec Nat Friedman -- who previously ran Xamarin, a developer tools start-up that Microsoft acquired in 2016 -- may take that CEO role. Google's senior VP of ads and commerce, Sridhar Ramaswamy, has also been in discussions for the job, says the report. Microsoft declined to comment on the report. GitHub did not immediately return a request for comment.
-'''
+# text = '''
+# Microsoft held talks in the past few weeks to acquire software developer platform GitHub, Business Insider reports. One person familiar with the discussions between the companies told CNBC that they had been considering a joint marketing partnership valued around $35 million, and that those discussions had progressed to a possible investment or outright acquisition. It is unclear whether talks are still ongoing, but this person said that GitHub's price for a full acquisition was more than Microsoft currently wanted to pay. GitHub was last valued at $2 billion in its last funding round 2015, but the price tag for an acquisition could be $5 billion or more, based on a price that was floated last year. GitHub's tools have become essential to software developers, who use it to store code, keep track of updates and discuss issues. The privately held company has more than 23 million individual users in more than 1.5 million organizations. It was on track to book more than $200 million in subscription revenue, including more than $110 million from companies using its enterprise product, GitHub told CNBC last fall.Microsoft has reportedly flirted with buying GitHub in the past, including in 2016, although GitHub denied those reports. A partnership would give Microsoft another connection point to the developers it needs to court to build applications on its various platforms, including the Azure cloud. Microsoft could also use data from GitHub to improve its artificial intelligence producs. The talks come amid GitHub's struggle to replace CEO and founder Chris Wanstrath, who stepped down 10 months ago. Business Insider reported that Microsoft exec Nat Friedman -- who previously ran Xamarin, a developer tools start-up that Microsoft acquired in 2016 -- may take that CEO role. Google's senior VP of ads and commerce, Sridhar Ramaswamy, has also been in discussions for the job, says the report. Microsoft declined to comment on the report. GitHub did not immediately return a request for comment.
+# '''
 #remove stop words, stem the words and then create frequency matrix of it
 def _create_frequency_matrix(sentences):
     frequency_matrix = {}
@@ -138,58 +138,55 @@ def _generate_summary(sentences, sentenceValue, threshold):
     summary = ''
 
     for sentence in sentences:
-        print(sentence)
+        # print(sentence)
         if sentence[:10] in sentenceValue and sentenceValue[sentence[:10]] >= (threshold):
             summary += " " + sentence
             sentence_count += 1
 
     return summary
 
-# 1 Separate sentences
-sentences = sent_tokenize(text) #NLTK function
-total_documents = len(sentences)
-print('1. Tokenised sentences:\n',sentences)
+def tf_idf_summarise(text):
+    # 1 Separate sentences
+    sentences = sent_tokenize(text) #NLTK function
+    total_documents = len(sentences)
+    # print('1. Tokenised sentences:\n',sentences)
 
-# 2 Create the Frequency matrix of the words in each sentence.
-freq_matrix = _create_frequency_matrix(sentences)
-print('\n2. Frequency Matrix of stemmed words:\n',freq_matrix)
+    # 2 Create the Frequency matrix of the words in each sentence.
+    freq_matrix = _create_frequency_matrix(sentences)
+    # print('\n2. Frequency Matrix of stemmed words:\n',freq_matrix)
 
-'''
-Term frequency (TF) is how often a word appears in a document, divided by how many words are there in a document.
-'''
-# 3 Calculate TermFrequency and generate a matrix
-tf_matrix = _create_tf_matrix(freq_matrix)
-print('\n3. Term Frequency Matrix:\n',tf_matrix)
+    '''
+    Term frequency (TF) is how often a word appears in a document, divided by how many words are there in a document.
+    '''
+    # 3 Calculate TermFrequency and generate a matrix
+    tf_matrix = _create_tf_matrix(freq_matrix)
+    # print('\n3. Term Frequency Matrix:\n',tf_matrix)
 
-# 4 creating table for documents per words
-count_doc_per_words = _create_documents_per_words(freq_matrix)
-print('\n5. How many documents contain the word:\n',count_doc_per_words)
+    # 4 creating table for documents per words
+    count_doc_per_words = _create_documents_per_words(freq_matrix)
+    # print('\n5. How many documents contain the word:\n',count_doc_per_words)
 
-'''
-Inverse document frequency (IDF) is how unique or rare a word is.
-'''
-# 5 Calculate IDF and generate a matrix
-idf_matrix = _create_idf_matrix(freq_matrix, count_doc_per_words, total_documents)
-print('\n5. How unique a word is(IDF):\n',idf_matrix)
+    '''
+    Inverse document frequency (IDF) is how unique or rare a word is.
+    '''
+    # 5 Calculate IDF and generate a matrix
+    idf_matrix = _create_idf_matrix(freq_matrix, count_doc_per_words, total_documents)
+    # print('\n5. How unique a word is(IDF):\n',idf_matrix)
 
-# 6 Calculate TF-IDF and generate a matrix
-tf_idf_matrix = _create_tf_idf_matrix(tf_matrix, idf_matrix)
-print('\n6. The TF-IDF matrix(TF*IDF):\n',tf_idf_matrix)
+    # 6 Calculate TF-IDF and generate a matrix
+    tf_idf_matrix = _create_tf_idf_matrix(tf_matrix, idf_matrix)
+    # print('\n6. The TF-IDF matrix(TF*IDF):\n',tf_idf_matrix)
 
-# 7 Important Algorithm: score the sentences
-sentence_scores = _score_sentences(tf_idf_matrix)
-print('\n7. Sentence scores:\n',sentence_scores)
+    # 7 Important Algorithm: score the sentences
+    sentence_scores = _score_sentences(tf_idf_matrix)
+    # print('\n7. Sentence scores:\n',sentence_scores)
 
-# 8 Find the threshold
-threshold = _find_average_score(sentence_scores)
-print('\n8. Threshold value(average sentence score):\n',threshold)
+    # 8 Find the threshold
+    threshold = _find_average_score(sentence_scores)
+    # print('\n8. Threshold value(average sentence score):\n',threshold)
 
-# 9 Important Algorithm: Generate the summary
-summary = _generate_summary(sentences, sentence_scores, 2 * threshold)
-print('\n**SUMMARY**:\n',summary)
+    # 9 Important Algorithm: Generate the summary
+    summary = _generate_summary(sentences, sentence_scores, 1 * threshold)
+    # print('\n**SUMMARY**:\n',summary)
 
-ref_sum = '''
-Microsoft held talks in the past few weeks to acquire software developer platform GitHub, Business Insider reports. The privately held company has more than 23 million individual users in more than 1.5 million organizations.
-'''
-matching_bigrams, precision, recall, f_measure = se.rouge(ref_sum, summary)
-print('B:','\tP:',precision,'\tR',recall,'\tF',f_measure)
+    return summary
