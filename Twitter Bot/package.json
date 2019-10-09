@@ -1,0 +1,15 @@
+{
+  "name": "twitter-bot",
+  "version": "1.0.0",
+  "description": "news bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "hello"
+  },
+  "author": "Dishant",
+  "license": "ISC",
+  "dependencies": {
+    "twit": "^2.2.11",
+    "twitter": "^1.7.1"
+  }
+}
