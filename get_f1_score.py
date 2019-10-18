@@ -6,7 +6,7 @@ from gensim.summarization.summarizer import summarize
 import summary_evaluation as sumeval
 
 def main():
-    articles = WSP.aljazeera_search('chandrayaan')
+    articles = WSP.aljazeera_search('turkey')
     print(len(articles))
     for article in articles:
         try:
