@@ -3,7 +3,6 @@ import math
 from nltk import sent_tokenize, word_tokenize, PorterStemmer
 from nltk.corpus import stopwords
 import nltk
-nltk.download('punkt')
 
 with open('johannes.txt','r+',encoding="utf-8") as file:
     text = file.read()
@@ -128,7 +127,7 @@ def _find_average_score(sentenceValue) -> int:
     # Average value of a sentence from original summary_text
     average = (sumValues / len(sentenceValue))
     return average
-    
+
 #sentence selected if the sentence score is more than threshold
 def _generate_summary(sentences, sentenceValue, threshold):
     sentence_count = 0

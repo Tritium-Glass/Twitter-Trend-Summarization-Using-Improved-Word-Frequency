@@ -147,8 +147,6 @@ def toi_search(phrase):
 	#print(page.text[:1000])
 	soup = BeautifulSoup(page.text, 'html5lib')
 
-
-
 	list_of_articles = soup.find_all('li',attrs={'class':"article"})
 
 	links =[]
@@ -188,8 +186,6 @@ def toi_webpage_to_text(link):
 	except Exception as e:
 		#print(e)
 		return
-
-
 
 	# print(text)
 	try:
