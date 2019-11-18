@@ -4,7 +4,7 @@ from nltk import sent_tokenize, word_tokenize, PorterStemmer
 from nltk.corpus import stopwords
 import nltk
 
-with open('johannes.txt','r+',encoding="utf-8") as file:
+with open('./passages/harmonyos.txt','r+',encoding="utf-8") as file:
     text = file.read()
 
 #remove stop words, stem the words and then create frequency matrix of it

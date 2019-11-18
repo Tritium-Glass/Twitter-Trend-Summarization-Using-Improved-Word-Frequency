@@ -4,7 +4,6 @@ from nltk import sent_tokenize, word_tokenize, PorterStemmer
 from nltk.corpus import stopwords
 import nltk
 import summary_evaluation as se
-nltk.download('punkt')
 
 # with open('microsoft.txt','r+',encoding="utf-8") as file:
 #     text = file.read()
