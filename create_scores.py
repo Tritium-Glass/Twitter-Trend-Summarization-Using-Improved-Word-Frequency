@@ -6,6 +6,8 @@ from gensim.summarization.summarizer import summarize
 import summary_evaluation as sumeval
 import csv
 
+article_count = 1
+
 def main():
     with open("keywords.txt") as file:
         keywords = file.read().split('\n')
@@ -15,10 +17,10 @@ def main():
     for keyword in keywords:
         articles = WSP.aljazeera_search(keyword)
         print(len(articles))
-        for article in articles:
+        for i in range(min(len(articles,article_count))):
             try:
-                ref_sum = autosum.get_summary(article)
-                sys_sum = word_freq_summarize(article)
+                ref_sum = autosum.get_summary(articles[i])
+                sys_sum = word_freq_summarize(articles[i])
             except:
                 continue
             # sys_sum = word_freq_summarize(article)
