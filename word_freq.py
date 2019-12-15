@@ -48,7 +48,7 @@ def word_freq_summarize(text):
     final_summary = ""
     while True and len(sorted_sen)>0:
         summ = max(sorted_sen, key=lambda x:sorted_sen[x])
-        if (len(final_summary)+len(summ))<280:
+        if (len(final_summary)+len(summ))<750:
             final_summary += summ
             del sorted_sen[summ]
         else:
@@ -57,9 +57,12 @@ def word_freq_summarize(text):
                 continue
             else:
                 break
-    # print(final_summary)
+    print("**SUMMARY**")
+    print(final_summary)
 
     return final_summary
 
-# if __name__ == "__main__":
-#     word_freq_summarize(text)
+if __name__ == "__main__":
+    with open('./passages/harmonyos.txt','r+',encoding="utf-8") as file:
+        text = file.read()
+        word_freq_summarize(text)
