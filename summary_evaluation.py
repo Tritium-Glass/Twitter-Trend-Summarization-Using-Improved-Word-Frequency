@@ -15,7 +15,7 @@ def rouge(reference_summary,generated_summary):
         generated_set.add(generated_summary[i]+' '+generated_summary[i+1])
 
     matching_bigrams = reference_set.intersection(generated_set)
-
+    print(len(matching_bigrams))
     # print(matching_bigrams)
 
     try:
