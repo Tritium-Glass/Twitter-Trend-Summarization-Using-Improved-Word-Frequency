@@ -31,7 +31,7 @@ def score_generator(human_summary, text):
 
         #textrank
         tr_start = timer()
-        tr_sum = summarize(text)
+        tr_sum = summarize(text,word_count=280)
         tr_end = timer()
         tr_time = tr_end - tr_start
         matching_bigrams, tr_precision, tr_recall, tr_f_measure = sumeval.rouge(ref_sum, tr_sum)
