@@ -66,7 +66,7 @@ def start_browser():
 	chrome_driver_path = dir + "/chromedriver.exe"
 	chrome_options = Options()
 	# "https://www.aljazeera.com/Search/?q="+search
-	chrome_options.add_argument("--headless")
+	#chrome_options.add_argument("--headless")
 	#chrome_options.binary_location = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
 	# create a new Chrome session
 
@@ -80,6 +80,7 @@ def aljazeera_search(phrase):
 	search = '+'.join(search.split())
 
 	driver.get("https://www.aljazeera.com/Search/?q="+search)
+	#https://www.aljazeera.com/Search/?q=trump
 	sleep(20)
 	articles = driver.find_elements_by_xpath("//div[@class='row topics-sec-item   ']")
 
@@ -89,23 +90,14 @@ def aljazeera_search(phrase):
 		# print(article.text)
 		exact_article = article.find_element_by_xpath("div[@class='col-sm-7 topics-sec-item-cont']")
 		article_link = exact_article.find_element_by_xpath("a")
-		# print(exact_article.text)
+
 		# print(article_link.get_attribute('href'))
 		if phrase in article_link.text.lower() and "in pictures" not in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
 
-	article_links = article_links[:10]
-
 	driver.close()
 
-	#print(article_links)
-
-	articles_list = []
-	for article_link in article_links:
-		articles_list.append(aljazeera_webpage_to_text(article_link))
-	# cnn_webpage_to_text(article_links[0])
-
-	return articles_list
+	return article_links
 
 def aljazeera_webpage_to_text(link):
 
@@ -114,25 +106,25 @@ def aljazeera_webpage_to_text(link):
 	#print(page.text[:1000])
 	soup = BeautifulSoup(page.text, 'html5lib')
 
-	body_content = soup.find('div',attrs={'class':"article-p-wrapper"})
+	body_content = soup.find('div',attrs={'class':"main-article-body"})
 
 	sentence_list = body_content.find_all('p')
 
 	text = []
+	article = "".encode("utf-8")
 	for sentence in sentence_list:
-		#print(sentence)
-		if isinstance(sentence.contents[0],bs4.element.NavigableString):
-			text.append(sentence.contents[0])
+		text=""
+		try:
+			text = sentence.find('span').text.encode("utf-8")
+		except Exception as e:
+			print("no span")
 
-	# print(text)
-	text= ''.join(text)
+		if len(text)==0:
+			text = sentence.text.encode("utf-8")
 
-	try:
-		# print(text,'\n')
-		return text
-	except Exception as e:
-		print('error')
-		pass
+		article += text
+
+	return str(article)
 
 def toi_search(phrase):
 
@@ -154,6 +146,14 @@ def toi_search(phrase):
 	for item in list_of_articles:
 
 		link = item.find('a')
+		article_time = link.find_all('span')[4]['rodate']
+		article_time = datetime.strptime(article_time,'%Y-%m-%dT%H:%M:%SZ').timestamp()
+		now = datetime.today().timestamp()
+
+		if now-article_time > 259200:
+			print('skipped')
+			continue
+
 		links.append("https://timesofindia.indiatimes.com"+link['href'])
 
 	for link in links:
@@ -198,7 +198,14 @@ def toi_webpage_to_text(link):
 		pass
 
 if __name__ == '__main__':
-	bbc_articles = bbc_search('trump')
-	for article in bbc_articles:
-		print(article)
-		print(bbc_webpage_to_text(article))
+	# bbc_articles = bbc_search('trump')
+	# for article in bbc_articles:
+	# 	print(article)
+	# 	print(bbc_webpage_to_text(article))
+
+	# aljazeera_articles = aljazeera_search('trump')
+	# for article in aljazeera_articles:
+	# 	print(article)
+	# 	print(aljazeera_webpage_to_text(article))
+
+	print(toi_search('trump'))
