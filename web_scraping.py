@@ -60,6 +60,18 @@ def bbc_webpage_to_text(link):
 
 	return text
 
+def start_browser():
+
+	dir = os.path.dirname(__file__)
+	chrome_driver_path = dir + "/chromedriver.exe"
+	chrome_options = Options()
+	# "https://www.aljazeera.com/Search/?q="+search
+	chrome_options.add_argument("--headless")
+	#chrome_options.binary_location = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+	# create a new Chrome session
+
+	return webdriver.Chrome(options=chrome_options)
+
 def aljazeera_search(phrase):
 
 	driver = start_browser()
@@ -78,7 +90,6 @@ def aljazeera_search(phrase):
 		# print(article.text)
 		exact_article = article.find_element_by_xpath("div[@class='col-sm-7 topics-sec-item-cont']")
 		article_link = exact_article.find_element_by_xpath("a")
-		print(exact_article.text)
 		# print(article_link.get_attribute('href'))
 		if phrase in article_link.text.lower() and "in pictures" not in article_link.text.lower():
 			article_links.append(article_link.get_attribute('href'))
@@ -105,7 +116,7 @@ def aljazeera_webpage_to_text(link):
 		try:
 			text = sentence.find('span').text.encode("utf-8")
 		except Exception as e:
-			print("no span")
+			pass
 
 		if len(text)==0:
 			text = sentence.text.encode("utf-8")
@@ -113,3 +124,22 @@ def aljazeera_webpage_to_text(link):
 		article += text
 
 	return str(article)
+
+
+def get_articles(trend):
+	articles = []
+	bbc_articles = bbc_search(trend)
+	for article in bbc_articles:
+	# 	print(article)
+	 	articles.append(bbc_webpage_to_text(article))
+
+	aljazeera_articles = aljazeera_search(trend)
+	for article in aljazeera_articles:
+	# 	print(article)
+		articles.append(aljazeera_webpage_to_text(article))
+
+	return articles
+
+
+if __name__ == '__main__':
+	print(bbc_search('trump'))

@@ -8,4 +8,4 @@ def get_summarized_article(text):
     summary = word_freq_summarize(text)
     summarization_end = timer()
     summarization_time = summarization_end - summarization_start
-    return summary, summarization_time
+    return summary

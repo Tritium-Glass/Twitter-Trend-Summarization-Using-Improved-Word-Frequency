@@ -19,8 +19,6 @@ def get_topics(documents):
 
 	news_df = pd.DataFrame({'document':documents})
 
-	print(news_df.head())
-
 	# removing everything except alphabets`
 	news_df['clean_doc'] = news_df['document'].str.replace("[^a-zA-Z#]", " ")
 
@@ -44,8 +42,8 @@ def get_topics(documents):
 	# de-tokenization
 	detokenized_doc = []
 	for i in range(len(news_df)):
-	    t = ' '.join(tokenized_doc[i])
-	    detokenized_doc.append(t)
+		t = ' '.join(tokenized_doc[i])
+		detokenized_doc.append(t)
 
 	news_df['clean_doc'] = detokenized_doc
 
@@ -91,28 +89,33 @@ def get_topics(documents):
 
 	terms = vectorizer.get_feature_names()
 
+	result = []
+
 	for i, comp in enumerate(svd_model.components_):
-	    terms_comp = zip(terms, comp)
-	    sorted_terms = sorted(terms_comp, key= lambda x:x[1], reverse=True)[:10]
-	    print("\nTopic "+str(i)+": ")
-	    for t in sorted_terms:
-	        print(t[0],end="")
-	        print(", ", end="")
+		terms_comp = zip(terms, comp)
+		sorted_terms = sorted(terms_comp, key= lambda x:x[1], reverse=True)[:10]
+		# print("\nTopic "+str(i)+": ")
+		for t in sorted_terms:
+			result.append(t[0])
+			# print(t[0],end="")
+			# print(", ", end="")
+
+	return result
 
 def main():
 	documents = []
 	with open('doc_sum.csv') as csv_file:
-	    csv_reader = csv.reader(csv_file, delimiter=',')
-	    i = 0
-	    for row in csv_reader:
-	        i+=1
-	        if i<7:
-	            continue
-	        if i>=11:
-	            break
-	        print(i)
-	        documents.append(row[0])
-	get_topics(documents)
+		csv_reader = csv.reader(csv_file, delimiter=',')
+		i = 0
+		for row in csv_reader:
+			i+=1
+			if i<7:
+				continue
+			if i>=11:
+				break
+			# print(i)
+			documents.append(row[0])
+	print(get_topics(documents))
 
 if __name__ == '__main__':
 	main()
