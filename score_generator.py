@@ -50,12 +50,12 @@ def score_generator(human_summary, text):
         print(e)
         return
 
-    with open('results_m1_sem8.csv', 'a') as f:
+    with open('results_m2_sem8.csv', 'a') as f:
         writer = csv.writer(f)
         writer.writerow([str(wf_time),str(tf_time),str(tr_time),str(wfi_time),str(wf_precision),str(tf_precision),str(tr_precision),str(wfi_precision),str(wf_recall),str(tf_recall),str(tr_recall),str(wfi_recall),str(wf_f_measure),str(tf_f_measure),str(tr_f_measure),str(wfi_f_measure)])
 
 def main():
-    with open('doc_sum.csv') as csv_file:
+    with open('doc_sum_2.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         i = 0
         for row in csv_reader:

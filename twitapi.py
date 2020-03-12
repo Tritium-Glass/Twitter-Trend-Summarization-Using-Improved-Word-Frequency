@@ -67,9 +67,7 @@ def get_trends():
 def post_tweet(summary):
 	#Update your status
 	twitter_api = connect()
-	#twitter_api.statuses.update(status=summary)
-
-#####################post_tweet("Good Morning")
+	twitter_api.statuses.update(status=summary)
 
 if __name__ == '__main__':
 	print(get_trends())

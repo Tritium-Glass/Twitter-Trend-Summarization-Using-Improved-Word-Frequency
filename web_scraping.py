@@ -25,7 +25,7 @@ class article:
 		self.article_age = article_age
 
 	def __repr__(self):
-		return '\nLink: '+self.link+'\nArticle Age: '+str(self.article_age)+'\nText: '+self.text
+		return str(('\nLink: '+self.link+'\nArticle Age: '+str(self.article_age)+'\nText: '+self.text).encode('utf-8'))
 
 def bbc_search(phrase):
 
@@ -55,6 +55,7 @@ def bbc_search(phrase):
 				now = datetime.today().timestamp()
 
 				if now-article_time > 259200:
+					print('bbc-skipped')
 					break
 
 				article_link = str(item.find('a',attrs={'class':"css-rjlb9k-PromoLink ett16tt7"}).attrs['href'])
@@ -134,7 +135,7 @@ def aljazeera_search(phrase):
 
 			if now-article_time > 259200:
 				print("skipped")
-				break
+				continue
 			if phrase in article_link.text.lower() and "in pictures" not in article_link.text.lower():
 
 				temp_article = article(article_link.get_attribute('href'),now-article_time)
@@ -156,20 +157,14 @@ def aljazeera_webpage_to_text(link):
 
 	body_content = soup.find('div',attrs={'class':"main-article-body"})
 
-	sentence_list = body_content.find_all('p')
+	sentence_list = body_content.find_all('p')[:-2]
 
-	article = str("".encode("utf-8"))
+	article = ""
 	for sentence in sentence_list:
 		text=""
-		try:
-			text = sentence.find('span').text.encode("utf-8")
-		except Exception as e:
-			pass
+		text = sentence.text
 
-		if len(text)!=0:
-			text = sentence.text.encode("utf-8")
-
-		article += str(text)
+		article += text
 
 	return str(article)
 
@@ -184,7 +179,7 @@ def get_articles(trend):
 	for article in bbc_articles:
 
 		if len(article.text)!=0:
-			#print(article)
+			print(article.link)
 			#print(len(article.text))
 			articles.append(article)
 
@@ -196,7 +191,7 @@ def get_articles(trend):
 		if len(text)==0:
 			del article
 		else:
-			article.set_text(aljazeera_webpage_to_text(article.link))
+			article.set_text(text)
 
 	for article in aljazeera_articles:
 		if len(article.text)!=0:
@@ -207,5 +202,5 @@ def get_articles(trend):
 	return articles
 
 if __name__ == '__main__':
-	for article in get_articles('trump'):
+	for article in get_articles('coronavirus'):
 		print(article)
