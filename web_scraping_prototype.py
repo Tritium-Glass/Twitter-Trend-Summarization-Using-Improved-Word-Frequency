@@ -22,23 +22,26 @@ def bbc_search(phrase):
 
 	soup = BeautifulSoup(page.text, 'html5lib')
 
-	articles = soup.find('ol',attrs={'class':"search-results results"})
-	articles_list =articles.find_all('li')
+	try:
+		articles = soup.find('ol',attrs={'class':"search-results results"})
+		articles_list =articles.find_all('li')
 
-	article_links = []
-	for article in articles_list:
-		time_text = str(article.find("time").text).lstrip().rstrip()
+		article_links = []
+		for article in articles_list:
+			time_text = str(article.find("time").text).lstrip().rstrip()
 
-		article_time = datetime.strptime(time_text,'%d %b %Y').timestamp()
-		now = datetime.today().timestamp()
+			article_time = datetime.strptime(time_text,'%d %b %Y').timestamp()
+			now = datetime.today().timestamp()
 
-		if now-article_time > 259200:
-			continue
+			if now-article_time > 259200:
+				continue
 
-		article_link = str(article.find('a',attrs={'class':"rs_touch"}).attrs['href'])
+			article_link = str(article.find('a',attrs={'class':"rs_touch"}).attrs['href'])
 
 
-		article_links.append(article_link)
+			article_links.append(article_link)
+	except Exception as e:
+		return []
 
 	return article_links
 
@@ -152,13 +155,11 @@ def toi_search(phrase):
 
 		if now-article_time > 259200:
 			print('skipped')
-			continue
+			break
 
 		links.append("https://timesofindia.indiatimes.com"+link['href'])
 
-	for link in links:
-		toi_webpage_to_text(link)
-
+	return links
 	# toi_webpage_to_text(links[0])
 
 def toi_webpage_to_text(link):
@@ -195,7 +196,9 @@ def toi_webpage_to_text(link):
 			print(text,"\n\n\n\n\n")
 		# print()
 	except Exception as e:
-		pass
+		return 'Error'
+
+	return text
 
 if __name__ == '__main__':
 	# bbc_articles = bbc_search('trump')
@@ -208,4 +211,7 @@ if __name__ == '__main__':
 	# 	print(article)
 	# 	print(aljazeera_webpage_to_text(article))
 
-	print(toi_search('trump'))
+	links = toi_search('holi')
+	for link in links:
+		print(link)
+		print(toi_webpage_to_text(link))

@@ -57,8 +57,8 @@ def word_freq_summarize(text):
                 continue
             else:
                 break
-    print("**SUMMARY**")
-    print(final_summary)
+    #print("**SUMMARY**")
+    #print(final_summary)
 
     return final_summary
 

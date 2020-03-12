@@ -23,27 +23,48 @@ class trend:
 		self.topic = topic
 
 	def __repr__(self):
-		return 'trend '+str(self.trend)+'articles'+str(len(self.articles))+'topics'+''.join(self.topic)
+		return '\ntrend '+str(self.trend)+'\narticles '+str(len(self.articles))+'\ntopics '+''.join(self.topic)
 
 
 def main():
 
 	trends = []
 
+	raw_trends = get_trends()
+
 	for key,value in get_trends().items():
 		print(key)
 		temp = trend(value,key)
 		articles = get_articles(key)
+		delete = []
+		for i in range(len(articles)):
+			if articles[i]=='':
+				delete.append(i)
+		for i in delete:
+			del articles[i]
+		if len(articles)==0:
+			del temp
+			continue
 		temp.set_articles(articles)
+
 		sum_articles = []
-		if len(articles)>0:
-			for article in articles:
-				sum_articles.append(get_summarized_article(article))
-			temp.set_summarized_articles(sum_articles)
-			topic = get_topics(temp.articles)
-			temp.set_topic(topic)
+		try:
+			if len(articles)>0:
+				for article in articles:
+					sum_articles.append(get_summarized_article(article))
+				temp.set_summarized_articles(sum_articles)
+				topic = get_topics(temp.articles)
+				temp.set_topic(topic)
+		except Exception as e:
+			del temp
+			continue
 		print(temp)
 		trends.append(temp)
+
+	print('\n\n\n\n\n\n\n')
+	print(raw_trends)
+	for item in trends:
+		print(item)
 
 if __name__ == '__main__':
 	main()
