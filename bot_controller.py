@@ -44,7 +44,7 @@ class trend:
 			return self.summarized_articles[0]+' '+make_tiny(self.articles[0].link)+' #'+'_'.join(self.exact_trend.split(' '))
 
 	def __repr__(self):
-		return '\ntrend '+str(self.useable_trend)+'\narticles '+str(len(self.articles))+'\ntopics '+self.topic
+		return '\ntrend '+str(self.useable_trend)+'\narticles '+str(len(self.articles))+'\ntopics '+str(self.topic)
 
 def make_tiny(url):
     request_url = ('http://tinyurl.com/api-create.php?' + urlencode({'url':url}))
@@ -58,7 +58,7 @@ def main():
 	raw_trends = get_trends()
 
 	for key,value in get_trends().items():
-		print(key)
+		#print(key)
 		temp = trend(value,key)
 		articles = get_articles(key)
 		delete = []
@@ -74,7 +74,7 @@ def main():
 			for j in range(i+1,len(articles)):
 				if articles[i].article_age > articles[j].article_age:
 					articles[i],articles[j] = articles[j],articles[i]
-					
+
 		temp.set_articles(articles)
 
 		sum_articles = []
@@ -91,13 +91,13 @@ def main():
 			print(traceback.format_exc())
 			del temp
 			continue
-		print(temp)
+		#print(temp)
 		trends.append(temp)
 
 	for i in range(len(trends)-1):
 		for j in range(i+1,len(trends)):
 			if compare_trends(trends[i].topic,trends[j].topic):
-				print('similar trends')
+				#print('similar trends')
 				del trend[j]
 
 	print('\n\n\n')

@@ -55,7 +55,7 @@ def bbc_search(phrase):
 				now = datetime.today().timestamp()
 
 				if now-article_time > 259200:
-					print('bbc-skipped')
+					#print('bbc-skipped')
 					break
 
 				article_link = str(item.find('a',attrs={'class':"css-rjlb9k-PromoLink ett16tt7"}).attrs['href'])
@@ -134,7 +134,7 @@ def aljazeera_search(phrase):
 			now = datetime.today().timestamp()
 
 			if now-article_time > 259200:
-				print("skipped")
+				#print("skipped")
 				continue
 			if phrase in article_link.text.lower() and "in pictures" not in article_link.text.lower():
 
@@ -179,7 +179,7 @@ def get_articles(trend):
 	for article in bbc_articles:
 
 		if len(article.text)!=0:
-			print(article.link)
+			#print(article.link)
 			#print(len(article.text))
 			articles.append(article)
 
