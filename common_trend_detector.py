@@ -3,6 +3,18 @@ import numpy as np
 import pandas as pd
 pd.set_option("display.max_colwidth", 200)
 
+def compare_trends(topics_1,topics_2):
+
+	topics_1 = set(topics_1)
+	topics_2 = set(topics_2)
+
+	union = topics_1.intersection(topics_2)
+
+	if len(union)>5:
+		return 1
+	else:
+		return 0
+
 def get_topics(documents):
 
 	# with open('doc_sum.csv') as csv_file:

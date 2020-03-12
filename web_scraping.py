@@ -9,6 +9,8 @@ from time import sleep
 from datetime import date,datetime
 from bs4 import BeautifulSoup
 import bs4
+import re
+import traceback
 
 class article:
 	def __init__(self,link,article_age=-1):
@@ -33,7 +35,7 @@ def bbc_search(phrase):
 		search = phrase
 		search = '+'.join(search.split())
 		url = "https://www.bbc.co.uk/search?q="+search+"&filter=news"
-		print(url)
+
 		page = requests.get(url)
 
 		soup = BeautifulSoup(page.text, 'html5lib')
@@ -44,25 +46,28 @@ def bbc_search(phrase):
 
 		article_links = []
 		for item in articles_list:
+			try:
 
-			time_span = item.find('span',attrs={'class':"css-1hizfh0-MetadataSnippet ecn1o5v0"})
-			time_text = time_span.find_all('span')[1].text
+				time_span = item.find('span',attrs={'class':"css-1hizfh0-MetadataSnippet ecn1o5v0"})
+				time_text = time_span.find_all('span')[1].text
 
-			article_time = datetime.strptime(time_text,'%d %b %Y').timestamp()
-			now = datetime.today().timestamp()
+				article_time = datetime.strptime(time_text,'%d %b %Y').timestamp()
+				now = datetime.today().timestamp()
 
-			if now-article_time > 259200:
-				break
+				if now-article_time > 259200:
+					break
 
-			article_link = str(item.find('a',attrs={'class':"css-rjlb9k-PromoLink ett16tt7"}).attrs['href'])
+				article_link = str(item.find('a',attrs={'class':"css-rjlb9k-PromoLink ett16tt7"}).attrs['href'])
+				if not (re.search(r'\bprogrammes\b',article_link)):
 
-			article_links.append(article_link)
-			temp_article = article(article_link,now-article_time)
+					temp_article = article(article_link,now-article_time)
 
-			articles.append(temp_article)
+					articles.append(temp_article)
+			except Exception as e:
+				print(traceback.format_exc())
 
 	except Exception as e:
-		print(e)
+		print(traceback.format_exc())
 		return []
 
 	return articles
@@ -84,7 +89,7 @@ def bbc_webpage_to_text(link):
 
 		text= ''.join(text)
 	except Exception as e:
-		# print(link)
+		print(traceback.format_exc())
 		# print(e)
 		return ""
 
@@ -135,7 +140,7 @@ def aljazeera_search(phrase):
 				temp_article = article(article_link.get_attribute('href'),now-article_time)
 				articles.append(temp_article)
 		except Exception as e:
-			print(e)
+			print(traceback.format_exc())
 			continue
 
 	driver.close()
@@ -153,8 +158,7 @@ def aljazeera_webpage_to_text(link):
 
 	sentence_list = body_content.find_all('p')
 
-	text = []
-	article = "".encode("utf-8")
+	article = str("".encode("utf-8"))
 	for sentence in sentence_list:
 		text=""
 		try:
@@ -162,13 +166,12 @@ def aljazeera_webpage_to_text(link):
 		except Exception as e:
 			pass
 
-		if len(text)==0:
+		if len(text)!=0:
 			text = sentence.text.encode("utf-8")
 
-		article += text
+		article += str(text)
 
 	return str(article)
-
 
 def get_articles(trend):
 	articles = []
@@ -176,14 +179,12 @@ def get_articles(trend):
 	for article in bbc_articles:
 		text = bbc_webpage_to_text(article.link)
 
-		if len(text)==0:
-			del article
-		else:
-			article.set_text(bbc_webpage_to_text(article.link))
+		article.set_text(bbc_webpage_to_text(article.link))
 
 	for article in bbc_articles:
+
 		if len(article.text)!=0:
-			print(article)
+			#print(article)
 			#print(len(article.text))
 			articles.append(article)
 
@@ -199,11 +200,12 @@ def get_articles(trend):
 
 	for article in aljazeera_articles:
 		if len(article.text)!=0:
-			print(article)
+			#print(article)
 			#print(len(article.text))
 			articles.append(article)
 
 	return articles
 
 if __name__ == '__main__':
-	get_articles('coronavirus')
+	for article in get_articles('trump'):
+		print(article)
