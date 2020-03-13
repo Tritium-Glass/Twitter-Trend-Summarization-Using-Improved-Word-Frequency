@@ -1,10 +1,3 @@
-# doc = [
-#     "An intern at OpenGenus",
-#     "Developer at OpenGenus",
-#     "A ML intern",
-#     "A ML developer"
-# ]
-
 import csv
 import pandas as pd
 import numpy as np
