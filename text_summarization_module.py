@@ -3,5 +3,5 @@
 from gensim.summarization.summarizer import summarize
 
 def get_summarized_article(text):
-    tr_sum = summarize(text,word_count=280)
+    tr_sum = summarize(text,word_count=240)
     return tr_sum
