@@ -16,7 +16,7 @@ def rouge(reference_summary,generated_summary):
 
     matching_bigrams = reference_set.intersection(generated_set)
     print(len(matching_bigrams))
-    # print(matching_bigrams)
+    print(matching_bigrams)
 
     try:
         precision = len(matching_bigrams)/len(reference_set)
@@ -27,12 +27,12 @@ def rouge(reference_summary,generated_summary):
         print(e)
         return 0,0,0,0
 
-    #print(f_measure)
+    print(f_measure)
 
-# def main():
-#     reference_summary = "Microsoft held talks in the past few weeks to acquire software developer platform GitHub, Business Insider reports. The privately held company has more than 23 million individual users in more than 1.5 million organizations."
-#     generated_summary = "The privately held company has more than 23 million individual users in more than 1.5 million organizations. Microsoft could also use data from GitHub to improve its artificial intelligence producs. Microsoft declined to comment on the report. GitHub did not immediately return a request for comment."
-#     rouge(reference_summary,generated_summary)
-#
-# if __name__ == '__main__':
-#     main()
+def main():
+    reference_summary = "After bearing the brunt of jihadist dynamite and looting by thieves, the archaeological treasures of Afghanistan's Bamiyan province are facing a new and possibly more daunting threat: climate change/."
+    generated_summary = "Many of the artefact’s pre-date the arrival of Islam to the region but despite the fact they come from another religion, the residents who spoke with AFP proudly defended the area's history as their own."
+    rouge(reference_summary, generated_summary)
+
+if __name__ == '__main__':
+    main()

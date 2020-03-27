@@ -49,7 +49,7 @@ def word_freq_improved_summarize(text):
     final_summary = ""
     while True and len(sorted_sen)>0:
         summ = max(sorted_sen, key=lambda x:sorted_sen[x])
-        if (len(final_summary)+len(summ))<280:
+        if (len(final_summary)+len(summ))<240:
             final_summary += summ
             del sorted_sen[summ]
         else:

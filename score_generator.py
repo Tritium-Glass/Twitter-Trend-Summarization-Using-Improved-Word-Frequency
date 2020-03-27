@@ -32,7 +32,7 @@ def score_generator(human_summary, text):
 
         #textrank
         tr_start = timer()
-        tr_sum = summarize(text,word_count=280)
+        tr_sum = summarize(text,word_count=240)
         tr_end = timer()
         tr_time = tr_end - tr_start
         matching_bigrams, tr_precision, tr_recall, tr_f_measure = sumeval.rouge(ref_sum, tr_sum)
@@ -62,7 +62,7 @@ def score_generator(human_summary, text):
 
     with open('results_blackbook.csv', 'a') as f:
         writer = csv.writer(f)
-        writer.writerow([str(wf_time),str(tf_time),str(tr_time),str(wfi_time),str(lsa_time),str(wf_f_measure),str(tf_f_measure),str(tr_f_measure),str(wfi_f_measure),str(lsa_f_measure)])
+        writer.writerow([str(wf_time),str(tf_time),str(tr_time),str(wfi_time),str(lsa_time),"",str(wf_f_measure),str(tf_f_measure),str(tr_f_measure),str(wfi_f_measure),str(lsa_f_measure)])
 
 def main():
     with open('doc_sum_2.csv') as csv_file:
