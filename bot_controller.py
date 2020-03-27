@@ -72,7 +72,7 @@ def main():
 			continue
 		for i in range(len(articles)-1):
 			for j in range(i+1,len(articles)):
-				if articles[i].article_age > articles[j].article_age:
+				if articles[i].article_age < articles[j].article_age:
 					articles[i],articles[j] = articles[j],articles[i]
 
 		temp.set_articles(articles)
@@ -94,11 +94,11 @@ def main():
 		#print(temp)
 		trends.append(temp)
 
-	for i in range(len(trends)-1):
-		for j in range(i+1,len(trends)):
-			if compare_trends(trends[i].topic,trends[j].topic):
-				#print('similar trends')
-				del trend[j]
+	# for i in range(len(trends)-1):
+	# 	for j in range(i+1,len(trends)):
+	# 		if compare_trends(trends[i].topic,trends[j].topic):
+	# 			#print('similar trends')
+	# 			del trend[j]
 
 	print('\n\n\n')
 	print(raw_trends)

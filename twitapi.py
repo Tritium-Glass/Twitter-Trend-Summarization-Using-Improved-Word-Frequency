@@ -25,7 +25,7 @@ def get_trends():
 
 	# world_trends = twitter_api.trends.place(_id=WORLD_WOE_ID)
 	# us_trends = twitter_api.trends.place(_id=US_WOE_ID)
-	trends = twitter_api.trends.place(_id=1940345)
+	trends = twitter_api.trends.place(_id=23424977)
 	#words = set(nltk.corpus.words.words())
 	exact = []
 	pro = []

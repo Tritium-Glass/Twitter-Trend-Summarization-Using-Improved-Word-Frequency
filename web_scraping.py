@@ -168,6 +168,77 @@ def aljazeera_webpage_to_text(link):
 
 	return str(article)
 
+def toi_search(phrase):
+
+	#while True:
+	#search = input("Enter an item to search: ")
+	search = phrase
+	search = '+'.join(search.split())
+	url = "https://timesofindia.indiatimes.com/topic/"+search+"/news"
+
+	#print(url)
+	page = requests.get(url)
+	#print(page.text[:1000])
+	soup = BeautifulSoup(page.text, 'html5lib')
+
+	list_of_articles = soup.find_all('li',attrs={'class':"article"})
+
+	links =[]
+
+	for item in list_of_articles:
+
+		link = item.find('a')
+		article_time = link.find_all('span')[4]['rodate']
+		article_time = datetime.strptime(article_time,'%Y-%m-%dT%H:%M:%SZ').timestamp()
+		now = datetime.today().timestamp()
+
+		if now-article_time > 259200:
+			print('skipped')
+			break
+
+		links.append("https://timesofindia.indiatimes.com"+link['href'])
+
+	return links
+	# toi_webpage_to_text(links[0])
+
+def toi_webpage_to_text(link):
+
+	page = requests.get(link)
+	#print(page.text[:1000])
+	soup = BeautifulSoup(page.text, 'html5lib')
+
+	sentence_list = []
+	text = []
+
+	try:
+		body_content = soup.find('div',attrs={'class':"Normal"})
+
+		start_end = [body_content.contents[0],body_content.contents[-1]]
+		sentence_list = body_content.find_all('p')
+
+		if len(sentence_list)==0:
+			raise Exception
+
+		for sentence in sentence_list:
+			#print(sentence)
+			if isinstance(sentence.contents[0],bs4.element.NavigableString):
+				text.append(sentence.contents[0])
+	except Exception as e:
+		#print(e)
+		return
+
+	# print(text)
+	try:
+		text= start_end[0]+''.join(text)+start_end[1]
+
+		if len(text)>200:
+			print(text,"\n\n\n\n\n")
+		# print()
+	except Exception as e:
+		return 'Error'
+
+	return text
+
 def get_articles(trend):
 	articles = []
 	bbc_articles = bbc_search(trend)
@@ -202,5 +273,5 @@ def get_articles(trend):
 	return articles
 
 if __name__ == '__main__':
-	for article in get_articles('coronavirus'):
+	for article in get_articles('boris'):
 		print(article)
