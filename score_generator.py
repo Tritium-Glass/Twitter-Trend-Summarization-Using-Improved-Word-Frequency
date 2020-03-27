@@ -3,6 +3,7 @@ from tf_idf import tf_idf_summarise
 from word_freq import word_freq_summarize
 from word_freq_improved import word_freq_improved_summarize
 from gensim.summarization.summarizer import summarize
+from lsa_textsum import lsa_summarise
 import summary_evaluation as sumeval
 from timeit import default_timer as timer
 
@@ -38,6 +39,15 @@ def score_generator(human_summary, text):
         print("TextRank: Time:",tr_time,"precision: ",tr_precision,"recall:"\
         ,tr_recall,"f_measure:",tr_f_measure)
 
+        #lsa
+        lsa_start = timer()
+        lsa_sum = lsa_summarise(text)
+        lsa_end = timer()
+        lsa_time = lsa_end - lsa_start
+        matching_bigrams, lsa_precision, lsa_recall, lsa_f_measure = sumeval.rouge(ref_sum, lsa_sum)
+        print("LSA: Time:",lsa_time,"precision: ",lsa_precision,"recall:"\
+        ,lsa_recall,"f_measure:",lsa_f_measure)
+
         #improved wf
         wfi_start = timer()
         wfi_sum = word_freq_improved_summarize(text)
@@ -50,9 +60,9 @@ def score_generator(human_summary, text):
         print(e)
         return
 
-    with open('results_m2_sem8.csv', 'a') as f:
+    with open('results_blackbook.csv', 'a') as f:
         writer = csv.writer(f)
-        writer.writerow([str(wf_time),str(tf_time),str(tr_time),str(wfi_time),str(wf_precision),str(tf_precision),str(tr_precision),str(wfi_precision),str(wf_recall),str(tf_recall),str(tr_recall),str(wfi_recall),str(wf_f_measure),str(tf_f_measure),str(tr_f_measure),str(wfi_f_measure)])
+        writer.writerow([str(wf_time),str(tf_time),str(tr_time),str(wfi_time),str(lsa_time),str(wf_f_measure),str(tf_f_measure),str(tr_f_measure),str(wfi_f_measure),str(lsa_f_measure)])
 
 def main():
     with open('doc_sum_2.csv') as csv_file:
