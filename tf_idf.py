@@ -138,7 +138,7 @@ def _generate_summary(sentences, sentenceValue, threshold):
 
     for sentence in sentences:
         # print(sentence)
-        if sentence[:10] in sentenceValue and sentenceValue[sentence[:10]] >= (threshold):
+        if sentence[:10] in sentenceValue and sentenceValue[sentence[:10]] >= (threshold) and (len(summary)+len(sentence))<240:
             summary += " " + sentence
             sentence_count += 1
 
