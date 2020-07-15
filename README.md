@@ -1,10 +1,9 @@
-# Final-Year-Project
-<h2>TWITTER BOT FOR SUMMARIZING ARTICLES BASED ON TWITTER TRENDS</h2>
-
-<br>
+# Twitter Bot For Summarizing Articles Based on Twitter Trends
+<h4>Created as Final Year Project for B. Tech in Computer Engineering</h4>
 
 <div>
-  <p>Working of the software:
+
+  <h3>Working of the software:</h3>
     <ul>
       <li>the Twitter interface interface takes the top few trending topics from Twitter, cleans them, and sends them to Web Scraping module</li>
       <li>the Web Scraping module searches the web for articles related to that topic that are most recent and are from trusted sources and then forwards them to the text summarization module</li>
@@ -26,7 +25,9 @@
       <li>Improved Word Frequency (we modified the word frequency algorithm)</li>
   </ol>
   </p>
-  </div>
+  
+ </div>
+
       
 
   
